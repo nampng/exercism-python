@@ -7,7 +7,7 @@ import json
 
 
 class RestApiTest(unittest.TestCase):
-    def test_no_users(self):
+    def test_no_users(self): # PASS
         database = {"users": []}
         api = RestAPI(database)
 
@@ -15,7 +15,7 @@ class RestApiTest(unittest.TestCase):
         expected = {"users": []}
         self.assertDictEqual(json.loads(response), expected)
 
-    def test_add_user(self):
+    def test_add_user(self): # PASS
         database = {"users": []}
         api = RestAPI(database)
         payload = json.dumps({"user": "Adam"})
@@ -23,7 +23,7 @@ class RestApiTest(unittest.TestCase):
         expected = {"name": "Adam", "owes": {}, "owed_by": {}, "balance": 0.0}
         self.assertDictEqual(json.loads(response), expected)
 
-    def test_get_single_user(self):
+    def test_get_single_user(self): # PASS
         database = {
             "users": [
                 {"name": "Adam", "owes": {}, "owed_by": {}, "balance": 0.0},
@@ -34,11 +34,15 @@ class RestApiTest(unittest.TestCase):
         payload = json.dumps({"users": ["Bob"]})
         response = api.get("/users", payload)
         expected = {
-            "users": [{"name": "Bob", "owes": {}, "owed_by": {}, "balance": 0.0}]
+            "users": [{
+                "name": "Bob", 
+                "owes": {}, 
+                "owed_by": {}, 
+                "balance": 0.0}]
         }
         self.assertDictEqual(json.loads(response), expected)
 
-    def test_both_users_have_0_balance(self):
+    def test_both_users_have_0_balance(self): # PASS
         database = {
             "users": [
                 {"name": "Adam", "owes": {}, "owed_by": {}, "balance": 0.0},
@@ -56,7 +60,7 @@ class RestApiTest(unittest.TestCase):
         }
         self.assertDictEqual(json.loads(response), expected)
 
-    def test_borrower_has_negative_balance(self):
+    def test_borrower_has_negative_balance(self): # PASS
         database = {
             "users": [
                 {"name": "Adam", "owes": {}, "owed_by": {}, "balance": 0.0},
@@ -80,7 +84,7 @@ class RestApiTest(unittest.TestCase):
         }
         self.assertDictEqual(json.loads(response), expected)
 
-    def test_lender_has_negative_balance(self):
+    def test_lender_has_negative_balance(self): # PASS
         database = {
             "users": [
                 {"name": "Adam", "owes": {}, "owed_by": {}, "balance": 0.0},
@@ -104,7 +108,7 @@ class RestApiTest(unittest.TestCase):
         }
         self.assertDictEqual(json.loads(response), expected)
 
-    def test_lender_owes_borrower(self):
+    def test_lender_owes_borrower(self): # PASS
         database = {
             "users": [
                 {"name": "Adam", "owes": {"Bob": 3.0}, "owed_by": {}, "balance": -3.0},
@@ -122,7 +126,7 @@ class RestApiTest(unittest.TestCase):
         }
         self.assertDictEqual(json.loads(response), expected)
 
-    def test_lender_owes_borrower_less_than_new_loan(self):
+    def test_lender_owes_borrower_less_than_new_loan(self): # PASS
         database = {
             "users": [
                 {"name": "Adam", "owes": {"Bob": 3.0}, "owed_by": {}, "balance": -3.0},
@@ -140,7 +144,7 @@ class RestApiTest(unittest.TestCase):
         }
         self.assertDictEqual(json.loads(response), expected)
 
-    def test_lender_owes_borrower_same_as_new_loan(self):
+    def test_lender_owes_borrower_same_as_new_loan(self): 
         database = {
             "users": [
                 {"name": "Adam", "owes": {"Bob": 3.0}, "owed_by": {}, "balance": -3.0},
